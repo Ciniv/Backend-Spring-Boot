@@ -19,9 +19,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.example.api.security.FilterToken;
 
+import lombok.RequiredArgsConstructor;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class Configurations {
 
     @Autowired
@@ -36,7 +39,6 @@ public class Configurations {
             .requestMatchers(HttpMethod.POST, "/usuario/autenticar").permitAll()
             .requestMatchers(HttpMethod.GET, "/usuario/renovar-ticket", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
             .anyRequest().authenticated().and()
-            .exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)).and()
             .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class).build();
     }
     

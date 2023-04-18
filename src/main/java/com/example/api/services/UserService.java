@@ -38,7 +38,7 @@ public class UserService {
 
         var usuario = (Usuario) authenticate.getPrincipal();
 
-        String token = this.tokenService.gerarToken(usuario);
+        String token = this.tokenService.gerar_token(usuario);
 
         UsuarioAutenticado usuarioAutenticado = new UsuarioAutenticado();
 
@@ -66,11 +66,11 @@ public class UserService {
         try {
             if(authorizationHeader != null){
                 token = authorizationHeader.replace("Bearer ", "");
-                this.tokenService.getSubject(token);
+                this.tokenService.get_subject(token);
 
                 Usuario usuario = this.userRepository.findByLogin(JWT.decode(token).getSubject());
 
-                String new_token = tokenService.gerarToken(usuario);
+                String new_token = tokenService.gerar_token(usuario);
                 UsuarioAutenticado user = this.hashtable.get(usuario.getLogin());
                 user.setToken(new_token);
 
@@ -83,7 +83,7 @@ public class UserService {
 
             Usuario usuario = this.userRepository.findByLogin(JWT.decode(token).getSubject());
 
-            String new_token = tokenService.gerarToken(usuario);
+            String new_token = tokenService.gerar_token(usuario);
             UsuarioAutenticado user = this.hashtable.get(usuario.getLogin());
             user.setToken(new_token);
 
