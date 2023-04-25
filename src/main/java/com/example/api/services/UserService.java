@@ -14,6 +14,7 @@ import com.example.api.dto.UsuarioAutenticado;
 import com.example.api.repositories.UserRepository;
 import com.example.api.security.TokenService;
 import com.example.api.entities.Usuario;
+import com.example.api.enums.Roles;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -45,11 +46,11 @@ public class UserService {
         usuarioAutenticado.setLogin(usuario.getLogin());
         usuarioAutenticado.setNome(usuario.getNome());
         usuarioAutenticado.setToken(token);
-        if (usuario.getAdministrador().equals("ADMIN")){
-            usuarioAutenticado.setAdministrador(true);
-        } else {
-            usuarioAutenticado.setAdministrador(false);
-        }
+        // if (usuario.getPapel().equals(Roles.ADMIN)){
+        //     usuarioAutenticado.setAdministrador(true);
+        // } else {
+        //     usuarioAutenticado.setAdministrador(false);
+        // }
         usuarioAutenticado.setAutenticado(authenticate.isAuthenticated());
 
         this.hashtable.put(usuario.getLogin(), usuarioAutenticado);

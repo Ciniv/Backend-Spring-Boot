@@ -1,7 +1,7 @@
 package com.example.api.entities;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,11 +12,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Entity
 @Data
 public class Usuario implements UserDetails{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,14 +30,16 @@ public class Usuario implements UserDetails{
     private String nome;
 
     @Column(nullable = false)
-    private String administrador;
-
-    @Column(nullable = false)
     private String senha;
 
+    @ManyToOne
+    private Papel papel;
+
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(administrador));
+    public Collection<GrantedAuthority> getAuthorities() {
+        Collection<GrantedAuthority> lista = new ArrayList<>();
+        lista.add(new SimpleGrantedAuthority(papel.getPapel().toString()));
+        return lista;
     }
 
     @Override
